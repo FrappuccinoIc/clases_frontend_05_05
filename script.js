@@ -1,5 +1,8 @@
 const students = [];
+//const grades = [];
+let average = 0
 
+const spanAverage = document.getElementById("average-grade");
 const tableBody = document.querySelector("#studentsTable tbody")
 const form = document.getElementById("studentForm");
 
@@ -17,6 +20,8 @@ form.addEventListener('submit', (e) => {
 
     const student = {name, lastName, grade};
     students.push(student);
+    //grades.push(grade);
+    calcularPromedio()
 
     addStudentToTable(student);
 })
@@ -30,4 +35,16 @@ function addStudentToTable(student) {
         <td>${student.grade }</td>
     `;
     tableBody.appendChild(row);
+}
+
+function calcularPromedio() {
+    if (students.length === 1) return spanAverage.textContent = `${students[0].grade}`;
+
+    let average = 0
+    for (let i = 0; i < students.length; i++) {
+        average += Math.round(students[i].grade, 2);
+    }
+    average = average / students.length
+   
+    spanAverage.textContent = `${average}`;
 }
