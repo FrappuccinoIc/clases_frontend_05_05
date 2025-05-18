@@ -15,15 +15,15 @@
         <form id="studentForm">
         <div class="mb-2 fw-bold">
             <label for="name" class="form-label bold">Nombre:</label>
-            <input type="text" class="form-control mx-auto" id="name" min="3" max="30" required>
+            <input type="text" class="form-control mx-auto" id="name" minlength="3" maxlength="30" required oninvalid="this.setCustomValidity('Ingrese nombre de 3 carácteres.')" oninput="this.setCustomValidity('')">
         </div>
         <div class="mb-2 fw-bold">
             <label for="lastName" class="form-label bold">Apellido:</label>
-            <input type="text" class="form-control mx-auto" id="lastName" min="3" max="30" required>
+            <input type="text" class="form-control mx-auto" id="lastName" minlength="3" maxlength="30" required oninvalid="this.setCustomValidity('Ingrese apellido de 3 carácteres.')" oninput="this.setCustomValidity('')">
         </div>
         <div class="mb-2 fw-bold">
             <label for="grade" class="form-label bold">Nota (1.0 - 7.0):</label>
-            <input type="number" class="form-control mx-auto" id="grade" step="0.1" min="1.0" max="7.0" placeholder="1.0" required>
+            <input type="number" class="form-control mx-auto" id="grade" step="0.1" min="1.0" max="7.0" placeholder="1.0" required oninvalid="this.setCustomValidity('Ingrese número.')" oninput="this.setCustomValidity('')">
         </div>
         <button type="submit" class="btn btn-primary rounded mt-2">Guardar Estudiante</button>
     </form>

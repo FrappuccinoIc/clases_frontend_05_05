@@ -20,7 +20,6 @@ form.addEventListener('submit', (e) => {
 
     const student = {name, lastName, grade};
     students.push(student);
-    //grades.push(grade);
     calcularPromedio()
 
     addStudentToTable(student);
