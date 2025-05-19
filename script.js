@@ -19,7 +19,7 @@ form.addEventListener('submit', (e) => {
 
     const student = {name, lastName, grade};
     students.push(student);
-    calcularPromedio()
+    spanAverage.textContent = calcularPromedio();
 
     addStudentToTable(student);
 })
@@ -30,7 +30,7 @@ function addStudentToTable(student) {
     `
         <td>${student.name}</td>
         <td>${student.lastName}</td>
-        <td>${student.grade }</td>
+        <td>${student.grade}</td>
     `;
     tableBody.appendChild(row);
 }
@@ -40,8 +40,8 @@ function calcularPromedio() {
     let average = 0
     
     for (let i = 0; i < students.length; i++) {
-        average += Math.round(students[i].grade, 2);
+        average += Math.floor(students[i].grade * 100) * 0.01;
     }
-    average = average / students.length
-    spanAverage.textContent = `${average}`;
+    average = average / students.length;
+    return average.toFixed(1);
 }
