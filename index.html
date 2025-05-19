@@ -15,15 +15,19 @@
         <form id="studentForm">
             <div class="mb-2 fw-bold">
                 <label for="name" class="form-label bold">Nombre:</label>
-                <input type="text" class="form-control mx-auto" id="name" minlength="3" maxlength="30" required oninvalid="this.setCustomValidity('Ingrese nombre de 3 carácteres.')" oninput="this.setCustomValidity('')">
+                <input type="text" class="form-control mx-auto" id="name" minlength="3" maxlength="30" required oninvalid="this.setCustomValidity('Ingrese nombre de al menos 3 carácteres.')" oninput="this.setCustomValidity('')">
             </div>
             <div class="mb-2 fw-bold">
                 <label for="lastName" class="form-label bold">Apellido:</label>
-                <input type="text" class="form-control mx-auto" id="lastName" minlength="3" maxlength="30" required oninvalid="this.setCustomValidity('Ingrese apellido de 3 carácteres.')" oninput="this.setCustomValidity('')">
+                <input type="text" class="form-control mx-auto" id="lastName" minlength="3" maxlength="30" required oninvalid="this.setCustomValidity('Ingrese apellido de al menos 3 carácteres.')" oninput="this.setCustomValidity('')">
             </div>
             <div class="mb-2 fw-bold">
                 <label for="grade" class="form-label bold">Nota (1.0 - 7.0):</label>
                 <input type="number" class="form-control mx-auto" id="grade" step="0.1" min="1.0" max="7.0" placeholder="1.0" required oninvalid="this.setCustomValidity('Ingrese número entre 1-7.')" oninput="this.setCustomValidity('')">
+            </div>
+            <div class="mb-2 fw-bold">
+                <label for="date" class="form-label bold">Fecha:</label>
+                <input type="date" class="form-control mx-auto" id="date" required oninvalid="this.setCustomValidity('Ingrese fecha válida.')" oninput="this.setCustomValidity('')">
             </div>
             <button type="submit" class="btn btn-primary rounded mt-2">Guardar Estudiante</button>
         </form>
@@ -35,6 +39,7 @@
                 <th>Nombre</th>
                 <th>Appelido</th>
                 <th>Nota</th>
+                <th>Fecha</th>
             </tr>
         </thead>
         <tbody>

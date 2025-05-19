@@ -11,13 +11,14 @@ form.addEventListener('submit', (e) => {
     const name = document.getElementById("name").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
     const grade = document.getElementById("grade").value.trim();
+    const date = document.getElementById("date").value.trim();
 
-    if( name.length < 3 || name.length > 30 ||
-        lastName.length < 3 || lastName.length > 30 ||
-        grade < 1.0 || grade > 7.0 || isNaN(grade)
-    ) return alert("Error, Datos Incorrectos.");
+    // if( name.length < 3 || name.length > 30 ||
+    //     lastName.length < 3 || lastName.length > 30 ||
+    //     grade < 1.0 || grade > 7.0 || isNaN(grade)
+    // ) return alert("Error, Datos Incorrectos.");
 
-    const student = {name, lastName, grade};
+    const student = {name, lastName, grade, date};
     students.push(student);
     spanAverage.textContent = calcularPromedio();
 
@@ -31,6 +32,7 @@ function addStudentToTable(student) {
         <td>${student.name}</td>
         <td>${student.lastName}</td>
         <td>${student.grade}</td>
+        <td>${student.date}</td>
     `;
     tableBody.appendChild(row);
 }
