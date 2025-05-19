@@ -1,5 +1,4 @@
 const students = [];
-let average = 0
 
 const spanAverage = document.getElementById("average-grade");
 const tableBody = document.querySelector("#studentsTable tbody")
@@ -20,22 +19,10 @@ form.addEventListener('submit', (e) => {
 
     const student = {name, lastName, grade, date};
     students.push(student);
-    spanAverage.textContent = calcularPromedio();
+    actualizarDisplayPromedio();
 
     addStudentToTable(student);
 })
-
-function addStudentToTable(student) {
-    const row = document.createElement("tr");
-    row.innerHTML = 
-    `
-        <td>${student.name}</td>
-        <td>${student.lastName}</td>
-        <td>${student.grade}</td>
-        <td>${student.date}</td>
-    `;
-    tableBody.appendChild(row);
-}
 
 function calcularPromedio() {
     if (students.length === 1) return spanAverage.textContent = `${students[0].grade}`;
@@ -46,4 +33,33 @@ function calcularPromedio() {
     }
     average = average / students.length;
     return average.toFixed(1);
+}
+
+function actualizarDisplayPromedio() {
+    spanAverage.textContent = calcularPromedio();
+}
+
+function eliminarEstudiante(student, row) {
+    const index = students.indexOf(student, row);
+    if(index > -1) {
+        students.splice(index, 1);
+        row.remove();
+        actualizarDisplayPromedio();
+    }
+}
+
+function addStudentToTable(student) {
+    const row = document.createElement("tr");
+    row.innerHTML = 
+    `
+        <td>${student.name}</td>
+        <td>${student.lastName}</td>
+        <td>${student.grade}</td>
+        <td>${student.date}</td>
+        <td><button class="btn btn-danger delete">Eliminar</button></td>
+    `;
+    row.querySelector(".delete").addEventListener("click", (e) => {
+        eliminarEstudiante(student, row);
+    })
+    tableBody.appendChild(row);
 }

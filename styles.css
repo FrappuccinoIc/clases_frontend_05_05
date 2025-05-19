@@ -73,5 +73,6 @@ th {
     }
     th, td {
         width: 20%;
+        font-size: 0.8em;
     }
 }
