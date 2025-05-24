@@ -18,6 +18,7 @@ function formSubmit(e) {
 
     addStudentToTable(student);
 }
+form.onsubmit = formSubmit;
 
 function calcularPromedio() {
     if (students.length === 0) return spanAverage.textContent = `No Disponible`;
@@ -61,18 +62,9 @@ function addStudentToTable(student) {
         eliminarEstudiante(student, row);
     });
     row.querySelector(".edit").addEventListener("click", (e) => {
-        let formBtn = document.getElementById("form-btn");
-        formBtn.textContent = "Editar Estudiante"
-        formBtn.classList.remove("btn-primary");
-        formBtn.classList.add("btn-warning");
-        
+        toggleFormEdit(true);
         form.onsubmit = function(e) {
             e.preventDefault();
-
-            let formBtn = document.getElementById("form-btn");
-            formBtn.textContent = "Guardar Estudiante"
-            formBtn.classList.remove("btn-warning");
-            formBtn.classList.add("btn-primary");
 
             student.name = document.getElementById("name").value.trim();
             student.lastName = document.getElementById("lastName").value.trim();
@@ -87,10 +79,29 @@ function addStudentToTable(student) {
 
             actualizarDisplayPromedio();
 
+            toggleFormEdit(false);
             form.onsubmit = formSubmit;
         }
     });
     tableBody.appendChild(row);
 }
 
-form.onsubmit = formSubmit;
+function toggleFormEdit(isEditModeActive = false) {
+    let formBtn = document.getElementById("form-btn");
+    let divForm = document.getElementById("form-container");
+    if(!isEditModeActive) {
+            divForm.classList.remove("border-warning");
+            divForm.classList.add("border-primary");
+
+            formBtn.textContent = "Guardar Estudiante"
+            formBtn.classList.remove("btn-warning");
+            formBtn.classList.add("btn-primary");
+        return
+    }
+    divForm.classList.remove("border-primary");
+    divForm.classList.add("border-warning");
+            
+    formBtn.textContent = "Editar Estudiante"
+    formBtn.classList.remove("btn-primary");
+    formBtn.classList.add("btn-warning");
+}
