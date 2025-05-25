@@ -34,15 +34,40 @@ h1 {
 
 table {
     border-collapse: collapse;
+    table-layout: fixed;
 }
 
 th, td {
     border: 1px solid rgb(54, 54, 54);
-    width: 10%;
+    word-wrap: break-word;
 }
 
 th {
     background-color: rgb(240, 240, 240);
+}
+
+tr.selectedForEdit td.colDato {
+    color: rgba(75, 75, 75, 0.75);
+    border: 1px solid rgba(54, 54, 54, 0.116);
+    border-bottom: 1px solid black;
+    
+}
+
+tr.selectedForEdit td.colDato:nth-child(4 of td.colDato) {
+    border-right: 1px solid black;
+}
+
+.colAcciones {
+    display: flex;
+    width: auto;
+    height: auto;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.colAcciones button {
+    margin: 1px;
 }
 
 @media screen and (max-width: 768px) {
@@ -57,8 +82,19 @@ th {
     #form-container {
         width: 340px;
     }
+    table {
+        width: 90vw;
+    }
     th, td {
         width: 20%;
+    }
+    .colAcciones {
+       flex-direction: column;
+       width: 100%;
+    }
+    .colAcciones button {
+        font-size: 0.9rem;
+        padding: 4px 1vw;
     }
 }
 
