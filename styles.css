@@ -86,7 +86,10 @@ tr.selectedForEdit td.colDato:nth-child(4 of td.colDato) {
         width: 90vw;
     }
     th, td {
-        width: 20%;
+        width: 21%;
+    }
+    th:nth-child(3 of th), td:nth-child(3 of td.colDato) {
+        width: 15%;
     }
     .colAcciones {
        flex-direction: column;

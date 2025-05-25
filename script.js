@@ -4,31 +4,6 @@ const spanAverage = document.getElementById("average-grade");
 const tableBody = document.querySelector("#studentsTable tbody")
 const form = document.getElementById("studentForm");
 
-function deseleccionarFilas() {
-    const row = document.querySelector("tbody tr.selectedForEdit");
-    if(!row) return
-    const btnEdit = row.querySelector(".edit");
-    btnEdit.textContent = "Editar";
-    btnEdit.classList.remove("cancelar");
-    row.classList.remove("selectedForEdit");
-}
-
-function formSubmit(e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const grade = document.getElementById("grade").value.trim();
-    const date = document.getElementById("date").value.trim();
-
-    const student = {name, lastName, grade, date};
-    students.push(student);
-    actualizarDisplayPromedio();
-    deseleccionarFilas();
-    addStudentToTable(student);
-}
-form.onsubmit = formSubmit;
-
 function calcularPromedio() {
     if (students.length === 0) return spanAverage.textContent = `No Disponible`;
     if (students.length === 1) return spanAverage.textContent = `${students[0].grade}`;
@@ -43,6 +18,35 @@ function calcularPromedio() {
 
 function actualizarDisplayPromedio() {
     spanAverage.textContent = calcularPromedio();
+}
+
+function deseleccionarFilas() {
+    const row = document.querySelector("tbody tr.selectedForEdit");
+    if(!row) return
+    const btnEdit = row.querySelector(".edit");
+    btnEdit.textContent = "Editar";
+    btnEdit.classList.remove("cancelar");
+    row.classList.remove("selectedForEdit");
+}
+
+function toggleFormEdit(isEditModeActive = false) {
+    const formBtn = document.getElementById("form-btn");
+    const divForm = document.getElementById("form-container");
+    if(!isEditModeActive) {
+            divForm.classList.remove("border-warning");
+            divForm.classList.add("border-primary");
+
+            formBtn.textContent = "Guardar Estudiante"
+            formBtn.classList.remove("btn-warning");
+            formBtn.classList.add("btn-primary");
+        return
+    }
+    divForm.classList.remove("border-primary");
+    divForm.classList.add("border-warning");
+            
+    formBtn.textContent = "Editar Estudiante"
+    formBtn.classList.remove("btn-primary");
+    formBtn.classList.add("btn-warning");
 }
 
 function eliminarEstudiante(student, row) {
@@ -72,6 +76,7 @@ function addStudentToTable(student) {
 
     btnDelete.addEventListener("click", (e) => {
         if(row.classList[0] === "selectedForEdit") {
+            form.reset();
             toggleFormEdit(false);
             form.onsubmit = formSubmit;
         }
@@ -80,6 +85,7 @@ function addStudentToTable(student) {
 
     btnEdit.addEventListener("click", (e) => {
         if(row.classList[0] === "selectedForEdit") {
+            form.reset();
             toggleFormEdit(false);
             form.onsubmit = formSubmit;
             deseleccionarFilas();
@@ -87,17 +93,25 @@ function addStudentToTable(student) {
         }
         deseleccionarFilas();
         toggleFormEdit(true);
+
+        const inputs = document.querySelectorAll("input.form-control");
+        inputs[0].value = student.name
+        inputs[1].value = student.lastName
+        inputs[2].value = student.grade
+        inputs[3].value = student.date
+
         btnEdit.textContent = "Cancelar";
         btnEdit.classList.add("cancelar");
         row.classList.add("selectedForEdit");
         form.onsubmit = function(e) {
             e.preventDefault();
 
-            student.name = document.getElementById("name").value.trim();
-            student.lastName = document.getElementById("lastName").value.trim();
-            student.grade = document.getElementById("grade").value.trim();
-            student.date = document.getElementById("date").value.trim();
-            
+            student.name = inputs[0].value.trim();
+            student.lastName = inputs[1].value.trim();
+            student.grade = inputs[2].value.trim();
+            student.date = inputs[3].value.trim();
+            form.reset();
+
             const cols = row.querySelectorAll(".colDato");
             cols[0].textContent = `${student.name}`;
             cols[1].textContent = `${student.lastName}`;
@@ -113,22 +127,19 @@ function addStudentToTable(student) {
     tableBody.appendChild(row);
 }
 
-function toggleFormEdit(isEditModeActive = false) {
-    let formBtn = document.getElementById("form-btn");
-    let divForm = document.getElementById("form-container");
-    if(!isEditModeActive) {
-            divForm.classList.remove("border-warning");
-            divForm.classList.add("border-primary");
+function formSubmit(e) {
+    e.preventDefault();
 
-            formBtn.textContent = "Guardar Estudiante"
-            formBtn.classList.remove("btn-warning");
-            formBtn.classList.add("btn-primary");
-        return
-    }
-    divForm.classList.remove("border-primary");
-    divForm.classList.add("border-warning");
-            
-    formBtn.textContent = "Editar Estudiante"
-    formBtn.classList.remove("btn-primary");
-    formBtn.classList.add("btn-warning");
+    const name = document.getElementById("name").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const grade = document.getElementById("grade").value.trim();
+    const date = document.getElementById("date").value.trim();
+    form.reset();
+
+    const student = {name, lastName, grade, date};
+    students.push(student);
+    actualizarDisplayPromedio();
+    deseleccionarFilas();
+    addStudentToTable(student);
 }
+form.onsubmit = formSubmit;
