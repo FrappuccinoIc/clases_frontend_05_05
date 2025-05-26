@@ -50,7 +50,7 @@ form.onsubmit = formSubmit;
 function cambiarEstiloForm() {
     const formBtn = document.getElementById("form-btn");
     const divForm = document.getElementById("form-container");
-    const radioList = document.querySelectorAll("input.edit");
+    const divEditList = document.querySelectorAll(".div_edit");
     form.reset()
     if(!estaEnModoEditar) {
         divForm.classList.remove("border-warning");
@@ -61,7 +61,10 @@ function cambiarEstiloForm() {
         formBtn.classList.add("btn-primary");
         form.onsubmit = formSubmit;
 
-        radioList.forEach((radio) => radio.setAttribute("disabled", ""))
+        divEditList.forEach((div) => {
+            div.querySelector("p").classList.add("text-muted")
+            div.querySelector("input").setAttribute("disabled", "")
+        })
         editBtn.textContent = "Entrar Edición";
         let fila = encontrarFilaSelec()
         if(fila) encontrarFilaSelec().querySelector(".edit").checked = false;
@@ -74,7 +77,10 @@ function cambiarEstiloForm() {
     formBtn.classList.remove("btn-primary");
     formBtn.classList.add("btn-warning");
 
-    radioList.forEach((radio) => radio.removeAttribute("disabled"))
+    divEditList.forEach((div) => {
+        div.querySelector("p").classList.remove("text-muted")
+        div.querySelector("input").removeAttribute("disabled")
+    })
     editBtn.textContent = "Salir Edición";
 }
 
@@ -103,7 +109,7 @@ function addStudentToTable(student) {
         <td class="colAcciones">
             <button class="btn btn-danger mb-1 delete">Eliminar</button>
             <div class="container column text-center div_edit">
-                <p class="mb-0">Editar:</p>
+                <p class="mb-0 text-muted">Editar:</p>
                 <input type="radio" class="form-check-input edit" name="edit" disabled>
             </div>
         </td>
