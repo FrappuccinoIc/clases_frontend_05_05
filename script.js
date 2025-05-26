@@ -62,7 +62,7 @@ function cambiarEstiloForm() {
         form.onsubmit = formSubmit;
 
         radioList.forEach((radio) => radio.setAttribute("disabled", ""))
-        editBtn.textContent = "Modo Edición";
+        editBtn.textContent = "Entrar Edición";
         let fila = encontrarFilaSelec()
         if(fila) encontrarFilaSelec().querySelector(".edit").checked = false;
         return
@@ -98,7 +98,7 @@ function addStudentToTable(student) {
     `
         <td class="colDato">${student.name}</td>
         <td class="colDato">${student.lastName}</td>
-        <td class="colDato">${student.grade}</td>
+        <td class="colDato ${student.grade < 4.0 ? "text-danger" : ""}">${student.grade}</td>
         <td class="colDato">${student.date}</td>
         <td class="colAcciones">
             <button class="btn btn-danger mb-1 delete">Eliminar</button>
@@ -134,10 +134,13 @@ function addStudentToTable(student) {
             student.grade = inputs[2].value.trim();
             student.date = inputs[3].value.trim();
 
-            const cols = encontrarFilaSelec().querySelectorAll(".colDato");
+            const filaEncontrada = encontrarFilaSelec();
+            const cols = filaEncontrada.querySelectorAll(".colDato");
             cols[0].textContent = `${student.name}`;
             cols[1].textContent = `${student.lastName}`;
             cols[2].textContent = `${student.grade}`;
+            if(student.grade < 4.0) cols[2].classList.add("text-danger");
+            else if(student.grade >= 4.0 && filaEncontrada.querySelector(".text-danger")) cols[2].classList.remove("text-danger")
             cols[3].textContent = `${student.date}`;
 
             actualizarDisplayPromedio();
