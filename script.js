@@ -1,25 +1,34 @@
 const students = [];
 
 const spanAverage = document.getElementById("average-grade");
+const spanCount = document.getElementById("stats-count");
+const spanApproved = document.getElementById("stats-approved");
+const spanFailed = document.getElementById("stats-failed");
+
 const tableBody = document.querySelector("#studentsTable tbody")
 const form = document.getElementById("studentForm");
 const editBtn = document.getElementById("form-edit");
 let estaEnModoEditar = false;
 
 function calcularPromedio() {
-    if (students.length === 0) return spanAverage.textContent = `No Disponible`;
-    if (students.length === 1) return spanAverage.textContent = `${students[0].grade}`;
+    spanCount.textContent = students.length;
+    spanApproved.textContent = 0;
+    spanFailed.textContent = 0;
+    if(students.length === 0) return spanAverage.textContent = `No Disponible`;
+    if(students.length === 1) {
+        parseFloat(students[0].grade) < 4.0 ? spanFailed.textContent = 1 : spanApproved.textContent = 1;
+        return spanAverage.textContent = `${students[0].grade}`;
+    }
     let average = 0
     
     for (let i = 0; i < students.length; i++) {
+        parseFloat(students[i].grade) < 4.0 ? spanFailed.textContent = parseInt(spanFailed.textContent) + 1 : spanApproved.textContent = parseInt(spanApproved.textContent) + 1;
         average += Math.floor(students[i].grade * 100) * 0.01;
     }
     average = average / students.length;
-    return average.toFixed(1);
-}
+    spanAverage.textContent = average.toFixed(1);
 
-function actualizarDisplayPromedio() {
-    spanAverage.textContent = calcularPromedio();
+
 }
 
 function encontrarFilaSelec() {
@@ -42,7 +51,7 @@ function formSubmit(e) {
 
     const student = {name, lastName, grade, date};
     students.push(student);
-    actualizarDisplayPromedio();
+    calcularPromedio();
     addStudentToTable(student);
 }
 form.onsubmit = formSubmit;
@@ -94,7 +103,7 @@ function eliminarEstudiante(student, row) {
     if(index > -1) {
         students.splice(index, 1);
         row.remove();
-        actualizarDisplayPromedio();
+        calcularPromedio();
     }
 }
 
@@ -149,7 +158,7 @@ function addStudentToTable(student) {
             else if(student.grade >= 4.0 && filaEncontrada.querySelector(".text-danger")) cols[2].classList.remove("text-danger")
             cols[3].textContent = `${student.date}`;
 
-            actualizarDisplayPromedio();
+            calcularPromedio();
             estaEnModoEditar = false;
             cambiarEstiloForm();
         }

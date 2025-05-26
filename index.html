@@ -10,7 +10,7 @@
 <body class="container gap-4">
     <h1 class="mx-auto">Seguimiento de calificaciones de estudiantes</h2>
 
-    <div id="average" class="border border-primary border-3 rounded primary">Promedio de Calificación: <span id="average-grade">No Disponible</span></div>
+    <div id="average" class="border border-primary border-3 rounded primary"><h2>Promedio de Calificación: <span id="average-grade">No Disponible</span></h2></div>
     <div id="form-container" class="container border border-primary border-3 rounded-3 p-3">
         <form id="studentForm">
             <div class="mb-2 fw-bold">
@@ -32,6 +32,14 @@
             <button id="form-btn" type="submit" class="btn btn-primary rounded mt-2">Guardar Estudiante</button>
             <button id="form-edit" type="button" class="btn btn-secondary rounded mt-2">Entrar Edición</button>
         </form>
+    </div>
+
+    <div id="stats-display" class="border border-primary border-3 rounded primary">
+        <h2>
+            N° Estudiantes: <span id="stats-count">0</span>
+            N° Aprobados: <span id="stats-approved">0</span>
+            N° Reprobados: <span id="stats-failed">0</span>
+        </h2>
     </div>
 
     <table id="studentsTable" border="2" cellpadding="8" cellspacing="0">
